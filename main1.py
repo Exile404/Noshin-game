@@ -21,7 +21,7 @@ sky_blue = (177, 213, 229)
 baby_blue = (186, 194, 207)
 
 # MENU VARIABLES
-num_buttons = 3
+num_buttons = 4
 button_distance_y = 75
 button_x = 200
 button_y = 50
@@ -54,7 +54,7 @@ clock = pygame.time.Clock()
 start = time.time()
 
 mouse_x,mouse_y = 0,0
-def game_start(start):
+def game_start(start,num=20):
     # CLOUD VARIABLES
 
     cloud_radius = 25
@@ -74,9 +74,9 @@ def game_start(start):
     attempts = 0
 
     score = 0
-    max_score = 20
+    max_score = num
 
-    max_attempts = 20
+    max_attempts = num
     num_clicks = 0
 
     while attempts<=max_attempts:
@@ -176,6 +176,41 @@ def HTM():
                 print(mouse_x,mouse_y)
                 if 122<=mouse_x<=544 and 314<=mouse_y<=356:
                     return True
+def settings():
+    while True:
+
+        screen.fill(sky_blue)
+
+        rule1 = my_font_4.render(f"Attempts: ", True, (43, 55, 74))
+        screen.blit(rule1, (30, 50))
+        pygame.draw.rect(screen, white, (150, 30, 50, 50))
+        score1 = my_font_4.render(f"10", True, (43, 55, 74))
+        screen.blit(score1, (160, 40))
+        pygame.draw.rect(screen, white, (210, 30, 50, 50))
+        score2 = my_font_4.render(f"15", True, (43, 55, 74))
+        screen.blit(score2, (220, 40))
+        pygame.draw.rect(screen, white, (270, 30, 50, 50))
+        score3 = my_font_4.render(f"20", True, (43, 55, 74))
+        screen.blit(score3, (280, 40))
+        # --- Go  ahead and update the screen with what we've drawn.
+        pygame.display.flip()
+        for event in pygame.event.get():  # Checks all events
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:  # If the current event is the mouse button down event
+                mouse_x, mouse_y = pygame.mouse.get_pos()  # Stores the mouse position
+                print(mouse_x, mouse_y)
+                if 122 <= mouse_x <= 544 and 314 <= mouse_y <= 356:
+                    return True
+                elif 155<=mouse_x<=192 and 35<=mouse_y<=68:
+                    return 10
+                elif 220<=mouse_x<=252 and 37<=mouse_y<=72:
+                    return 15
+                elif 279<=mouse_x<=311 and 38<=mouse_y<=70:
+                    return 20
 
 def menu():
     screen.fill((177, 213, 229))
@@ -186,19 +221,25 @@ def menu():
     menu_title = my_font.render("WHACK-A-CLOUD", True, (66, 93, 133))
     screen.blit(menu_title, (15, 75))
     # play button
-    pygame.draw.rect(screen, white,(265,250, 170, 50))
+    pygame.draw.rect(screen, white,(265,180, 170, 50))
     button_play = my_font_2.render("PLAY", True, (43, 55, 74))
-    screen.blit(button_play, ((width - 140) / 2, height / 2))
+    screen.blit(button_play, (280, 180))
     # How to play button
-    pygame.draw.rect(screen, white, (180, 325, 360, 60))
+    pygame.draw.rect(screen, white, (180, 250, 360, 60))
     button_how = my_font_2.render("How To play", True, (43, 55, 74))
-    screen.blit(button_how, (200, height / 2 + 75))
+    screen.blit(button_how, (200, 250))
+    #Settings
+    pygame.draw.rect(screen, white, (220, 325, 270, 60))
+    button_how = my_font_2.render("Settings", True, (43, 55, 74))
+    screen.blit(button_how, (240, 325))
+    #Quit
     pygame.draw.rect(screen, white, (265, 400, 170, 50))
     button_quit = my_font_2.render("QUIT", True, (43, 55, 74))
     screen.blit(button_quit, ((width - 140) / 2, height / 2 + 150))
     pygame.display.flip()
 check = True
-while check:
+num=20
+while check!=False:
     menu()
     for event in pygame.event.get():  # Checks all events
         if event.type == pygame.QUIT:
@@ -208,17 +249,21 @@ while check:
                 sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:  # If the current event is the mouse button down event
             mouse_x,mouse_y = pygame.mouse.get_pos()  # Stores the mouse position
-            # print(mouse_x,mouse_y)
+            print(mouse_x,mouse_y)
             if 268<=mouse_x<=424 and 405<=mouse_y<=444:
                 check=False
                 break
 
-            elif 271<=mouse_x<=429 and 256<=mouse_y<=292:
-                score,attempts = game_start(start)
-                clock.tick(120)
+            elif 274<=mouse_x<=428 and 185<=mouse_y<=225:
+                if num!=True:
+                    score,attempts = game_start(start,num)
+                    clock.tick(120)
                 check = endScreen(score,attempts)
-            elif 182<=mouse_x<=529 and 326<=mouse_y<=379:
+            elif 184<=mouse_x<=533 and 258<=mouse_y<=301:
                 check = HTM()
+            elif 228<=mouse_x<=479 and 328<=mouse_y<=375:
+                num = settings()
+
 
 pygame.quit()
 
