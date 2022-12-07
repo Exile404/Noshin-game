@@ -146,7 +146,7 @@ def endScreen(score,attempts):
                 mouse_x, mouse_y = pygame.mouse.get_pos()  # Stores the mouse position
                 if 125<=mouse_x<=542 and 198<=mouse_y<=234:
                     return True
-                else:
+                elif 278<=mouse_x<= 400 and 263<=mouse_y<=306:
                     return False
 def HTM():
     while True:
@@ -173,7 +173,7 @@ def HTM():
                     sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:  # If the current event is the mouse button down event
                 mouse_x, mouse_y = pygame.mouse.get_pos()  # Stores the mouse position
-                print(mouse_x,mouse_y)
+                # print(mouse_x,mouse_y)
                 if 122<=mouse_x<=544 and 314<=mouse_y<=356:
                     return True
 def settings():
